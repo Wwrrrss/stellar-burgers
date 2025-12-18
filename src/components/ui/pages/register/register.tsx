@@ -28,7 +28,7 @@ export const RegisterUI: FC<RegisterUIProps> = ({
       >
         <>
           <div className='pb-6'>
-            <Input
+            {/* <Input
               type='text'
               placeholder='Имя'
               onChange={(e) => setUserName(e.target.value)}
@@ -49,7 +49,7 @@ export const RegisterUI: FC<RegisterUIProps> = ({
               error={false}
               errorText=''
               size={'default'}
-            />
+            /> */}
           </div>
           <div className='pb-6'>
             <PasswordInput

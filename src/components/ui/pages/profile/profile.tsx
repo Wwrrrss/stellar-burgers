@@ -25,7 +25,7 @@ export const ProfileUI: FC<ProfileUIProps> = ({
     >
       <>
         <div className='pb-6'>
-          <Input
+          {/* <Input
             type={'text'}
             placeholder={'Имя'}
             onChange={handleInputChange}
@@ -61,7 +61,7 @@ export const ProfileUI: FC<ProfileUIProps> = ({
             errorText={''}
             size={'default'}
             icon={'EditIcon'}
-          />
+          /> */}
         </div>
         {isFormChanged && (
           <div className={styles.button}>

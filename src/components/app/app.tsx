@@ -11,7 +11,13 @@ import {
 } from '@pages';
 import '../../index.css';
 import styles from './app.module.css';
-import { Routes, Route, Navigate, BrowserRouter } from 'react-router-dom';
+import {
+  Routes,
+  Route,
+  Navigate,
+  BrowserRouter,
+  useNavigate
+} from 'react-router-dom';
 
 import {
   AppHeader,
@@ -20,12 +26,7 @@ import {
   Modal,
   OrderInfo
 } from '@components';
-// import { useSelector } from 'react-redux';
 import { Preloader } from '@ui';
-
-const fn = () => {
-  console.log(4);
-};
 
 type ProtectedRouteProps = {
   children: React.ReactElement;
@@ -46,10 +47,16 @@ export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   return children;
 };
 
-const App = () => (
-  <div className={styles.app}>
-    <AppHeader />
-    <BrowserRouter>
+const App = () => {
+  const navigate = useNavigate();
+
+  const onClose = () => {
+    navigate('/');
+  };
+
+  return (
+    <div className={styles.app}>
+      <AppHeader />
       <Routes>
         <Route path='/' element={<ConstructorPage />} />
         <Route path='/feed' element={<Feed />} />
@@ -106,7 +113,7 @@ const App = () => (
           path='/feed/:number'
           element={
             <ProtectedRoute>
-              <Modal title='' onClose={fn}>
+              <Modal title='' onClose={onClose}>
                 <OrderInfo />
               </Modal>
             </ProtectedRoute>
@@ -116,7 +123,7 @@ const App = () => (
           path='/ingredients/:id'
           element={
             <ProtectedRoute>
-              <Modal title='' onClose={fn}>
+              <Modal title='' onClose={onClose}>
                 <IngredientDetails />
               </Modal>
             </ProtectedRoute>
@@ -126,15 +133,15 @@ const App = () => (
           path='/profile/orders/:number'
           element={
             <ProtectedRoute>
-              <Modal title='' onClose={fn}>
+              <Modal title='' onClose={onClose}>
                 <OrderInfo />
               </Modal>
             </ProtectedRoute>
           }
         />
       </Routes>
-    </BrowserRouter>
-  </div>
-);
+    </div>
+  );
+};
 
 export default App;
