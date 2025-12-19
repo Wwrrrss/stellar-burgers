@@ -72,15 +72,15 @@ export const updateUser = createAsyncThunk(
   }
 );
 
-export const getOrders = createAsyncThunk('orders/get', async () => {
-  const res = await getOrdersApi();
-  return res;
-});
-
 export const logoutUser = createAsyncThunk('user/logout', async () => {
   const res = await logoutApi();
   localStorage.removeItem('refreshToken');
   deleteCookie('accessToken');
+  return res;
+});
+
+export const getOrders = createAsyncThunk('orders/get', async () => {
+  const res = await getOrdersApi();
   return res;
 });
 
@@ -168,11 +168,3 @@ export const userSlice = createSlice({
 });
 
 export default userSlice.reducer;
-
-// export const loginUser = createAsyncThunk(
-//   'user/login',
-//   async (data: TLoginData) => {
-//     const res = await loginUserApi(data);
-//     return res;
-//   }
-// );

@@ -14,21 +14,17 @@ import styles from './app.module.css';
 import {
   Routes,
   Route,
-  Navigate,
-  BrowserRouter,
   useNavigate
 } from 'react-router-dom';
 
 import {
   AppHeader,
-  BurgerConstructor,
   IngredientDetails,
   Modal,
   OrderInfo
 } from '@components';
-import { Preloader } from '@ui';
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from '../../services/store';
+import { useDispatch } from '../../services/store';
 import { fetchIngredients } from '../../services/constructorSlice';
 import { ProtectedRoute } from '../protected-route';
 import { getUser } from '../../services/userSlice';

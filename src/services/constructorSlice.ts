@@ -1,5 +1,5 @@
 import { getIngredientsApi, orderBurgerApi } from '@api';
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TIngredient, TOrder } from '@utils-types';
 
 interface IState {
@@ -40,15 +40,17 @@ export const constructorSlice = createSlice({
   initialState,
   reducers: {
     addToSelected: (state, action) => {
-      const ing = state.allingredients.find((e) => e._id === action.payload);
-      if (!ing) return;
+      const ingredient = state.allingredients.find(
+        (e) => e._id === action.payload
+      );
+      if (!ingredient) return;
 
-      if (ing.type === 'bun') {
-        state.bun = ing;
+      if (ingredient.type === 'bun') {
+        state.bun = ingredient;
         return;
       }
 
-      state.selectedIngredients.push(ing);
+      state.selectedIngredients.push(ingredient);
     },
     deleteFromSelected: (state, action) => {
       const ing = state.selectedIngredients.at(action.payload);
