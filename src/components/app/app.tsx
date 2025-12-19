@@ -27,32 +27,21 @@ import {
   OrderInfo
 } from '@components';
 import { Preloader } from '@ui';
-
-type ProtectedRouteProps = {
-  children: React.ReactElement;
-};
-
-export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
-  const isAuthChecked = true; // useSelector(isAuthCheckedSelector);
-  const user = true; // useSelector(userDataSelector);
-
-  if (!isAuthChecked) {
-    return <Preloader />;
-  }
-
-  if (!user) {
-    return <Navigate replace to='/login' />;
-  }
-
-  return children;
-};
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from '../../services/store';
+import { fetchIngredients } from '../../services/constructorSlice';
+import { ProtectedRoute } from '../protected-route';
+import { getUser } from '../../services/userSlice';
+import { fetchFeed } from '../../services/feedSlice';
 
 const App = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const onClose = () => {
-    navigate('/');
-  };
+  useEffect(() => {
+    dispatch(fetchIngredients());
+    dispatch(getUser());
+  }, []);
 
   return (
     <div className={styles.app}>
@@ -63,80 +52,77 @@ const App = () => {
         <Route path='*' element={<NotFound404 />} />
         <Route
           path='/login'
-          element={
-            <ProtectedRoute>
-              <Login />
-            </ProtectedRoute>
-          }
+          element={<ProtectedRoute onlyUnAuth component={<Login />} />}
         />
         <Route
           path='/register'
-          element={
-            <ProtectedRoute>
-              <Register />
-            </ProtectedRoute>
-          }
+          element={<ProtectedRoute onlyUnAuth component={<Register />} />}
         />
         <Route
           path='/forgot-password'
-          element={
-            <ProtectedRoute>
-              <ForgotPassword />
-            </ProtectedRoute>
-          }
+          element={<ProtectedRoute onlyUnAuth component={<ForgotPassword />} />}
         />
         <Route
           path='/reset-password'
-          element={
-            <ProtectedRoute>
-              <ResetPassword />
-            </ProtectedRoute>
-          }
+          element={<ProtectedRoute onlyUnAuth component={<ResetPassword />} />}
         />
         <Route
           path='/profile'
-          element={
-            <ProtectedRoute>
-              <Profile />
-            </ProtectedRoute>
-          }
+          element={<ProtectedRoute component={<Profile />} />}
         />
         <Route
           path='/profile/orders'
-          element={
-            <ProtectedRoute>
-              <ProfileOrders />
-            </ProtectedRoute>
-          }
+          element={<ProtectedRoute component={<ProfileOrders />} />}
         />
         <Route
           path='/feed/:number'
           element={
-            <ProtectedRoute>
-              <Modal title='' onClose={onClose}>
-                <OrderInfo />
-              </Modal>
-            </ProtectedRoute>
+            <ProtectedRoute
+              component={
+                <Modal
+                  title=''
+                  onClose={() => {
+                    navigate('/feed');
+                  }}
+                >
+                  <OrderInfo />
+                </Modal>
+              }
+            />
           }
         />
         <Route
           path='/ingredients/:id'
           element={
-            <ProtectedRoute>
-              <Modal title='' onClose={onClose}>
-                <IngredientDetails />
-              </Modal>
-            </ProtectedRoute>
+            <ProtectedRoute
+              component={
+                <Modal
+                  title='Детали ингредиента'
+                  onClose={() => {
+                    navigate('/');
+                  }}
+                >
+                  <IngredientDetails />
+                </Modal>
+              }
+            />
           }
         />
         <Route
           path='/profile/orders/:number'
           element={
-            <ProtectedRoute>
-              <Modal title='' onClose={onClose}>
-                <OrderInfo />
-              </Modal>
-            </ProtectedRoute>
+            <ProtectedRoute
+              component={
+                <Modal
+                  title=''
+                  onClose={() => {
+                    navigate('/profile/orders');
+                  }}
+                >
+                  <OrderInfo />
+                </Modal>
+              }
+            />
           }
         />
       </Routes>

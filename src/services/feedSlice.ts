@@ -4,7 +4,6 @@ import { TOrder } from '@utils-types';
 
 interface IState {
   orders: TOrder[];
-  selectedOrder: TOrder | null;
   total: number;
   totalToday: number;
   isLoading: boolean;
@@ -12,7 +11,6 @@ interface IState {
 
 const initialState: IState = {
   orders: [],
-  selectedOrder: null,
   total: 0,
   totalToday: 0,
   isLoading: false
@@ -26,12 +24,7 @@ export const fetchFeed = createAsyncThunk('feed/fetch', async () => {
 export const feedSlice = createSlice({
   name: 'feed',
   initialState,
-  reducers: {
-    selectOrder: (state, action) => {
-      const order = state.orders.find((e) => e._id === action.payload);
-      state.selectedOrder = order ?? null;
-    }
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchFeed.pending, (state) => {

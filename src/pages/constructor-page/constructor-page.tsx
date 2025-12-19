@@ -9,13 +9,7 @@ import { FC, useEffect } from 'react';
 import { fetchIngredients } from '../../services/constructorSlice';
 
 export const ConstructorPage: FC = () => {
-  const dispatch = useDispatch();
-
   const isIngredientsLoading = useSelector((state) => state.homePage.isLoading);
-
-  useEffect(() => {
-    dispatch(fetchIngredients());
-  }, []);
 
   return (
     <>
