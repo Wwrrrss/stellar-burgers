@@ -20,12 +20,12 @@ export const BurgerConstructor: FC = () => {
   const onOrderClick = () => {
     if (!constructorItems.bun || orderRequest) return;
     if (!user) navigate('/login');
-    dispatch(postOrder(constructorItems.ingredients.map((e) => e._id)));
+    dispatch(postOrder());
   };
   const closeOrderModal = () => {
     dispatch(closeModal());
   };
-
+  // constructorItems.ingredients.map((e) => e._id)
   const price = useMemo(
     () =>
       (constructorItems.bun ? constructorItems.bun.price * 2 : 0) +

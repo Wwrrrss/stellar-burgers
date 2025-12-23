@@ -1,6 +1,7 @@
 import { getIngredientsApi, orderBurgerApi } from '@api';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TIngredient, TOrder } from '@utils-types';
+import { RootState } from './store';
 
 interface IState {
   selectedIngredients: TIngredient[];
@@ -30,7 +31,12 @@ export const fetchIngredients = createAsyncThunk(
   }
 );
 
-export const postOrder = createAsyncThunk('order', async (data: string[]) => {
+export const postOrder = createAsyncThunk('order', async (_, { getState }) => {
+  const state = (getState() as RootState).homePage;
+  const data = state.selectedIngredients.map((e) => e._id);
+  if (state.bun) {
+    data.push(state.bun._id, state.bun._id);
+  }
   const res = await orderBurgerApi(data);
   return res;
 });

@@ -137,6 +137,7 @@ export const userSlice = createSlice({
       state.isUserLoading = true;
     });
     builder.addCase(updateUser.fulfilled, (state, action) => {
+      state.isUserLoading = false;
       state.user = action.payload.user;
     });
     builder.addCase(updateUser.rejected, (state) => {
