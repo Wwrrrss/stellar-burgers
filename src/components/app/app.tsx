@@ -37,7 +37,6 @@ const App = () => {
   useEffect(() => {
     dispatch(fetchIngredients());
     dispatch(getUser());
-    dispatch(fetchFeed());
   }, []);
 
   const getNumber = (url: string, name: string) => {
