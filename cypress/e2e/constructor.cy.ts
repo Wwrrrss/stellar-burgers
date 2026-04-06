@@ -1,3 +1,5 @@
+import { contains } from "cypress/types/jquery"
+
 describe('constructor-page', () => {
 
   beforeEach(() => {
@@ -52,5 +54,40 @@ describe('constructor-page', () => {
         cy.get('button').click()
       })
     cy.get('#modal').should('not.exist')
+  })
+
+  it('order', () => {
+    cy.intercept('POST', '/api/orders', {
+      statusCode: 200,
+      fixture: 'order.json'
+    }).as('orderBurger')
+
+    cy.get('#burger_ingredients')
+      .find('li')
+      .each(($el, index) => {
+        if (index < 3) {
+          cy.wrap($el).contains('Добавить').click()
+        }
+      })
+    
+    cy.get('#burger_constructor')
+      .within(() => {
+        cy.contains('Оформить заказ').click()
+      })
+
+    cy.wait('@orderBurger')
+    
+    cy.get('#modal').should('exist')
+    cy.get('#modal').should('contain', '103709')
+
+    cy.get('#modal')
+      .within(() => {
+        cy.get('button').click()
+      })
+    
+    cy.get('#modal').should('not.exist')
+
+    cy.get('#burger_constructor').should('contain', 'Выберите булки')
+    cy.get('#burger_constructor').should('contain', 'Выберите начинку')
   })
 })
