@@ -11,7 +11,7 @@ import {
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TOrder, TUser } from '@utils-types';
 import { TAuthResponse } from '@api';
-import { deleteCookie, setCookie } from '../utils/cookie';
+import { deleteCookie, setCookie } from '../../utils/cookie';
 
 interface IState {
   user: TUser | null;

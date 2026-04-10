@@ -1,7 +1,7 @@
 import { getIngredientsApi, orderBurgerApi } from '@api';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TIngredient, TOrder } from '@utils-types';
-import { RootState } from './store';
+import { RootState } from '../store';
 
 interface IState {
   selectedIngredients: TIngredient[];
