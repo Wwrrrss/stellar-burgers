@@ -3,7 +3,8 @@ import reducer, {
   deleteFromSelected,
   deleteBun,
   moveIngredient,
-  closeModal
+  closeModal,
+  fetchIngredients
 } from './constructorSlice';
 const bun = {
     _id: '1',
@@ -113,5 +114,29 @@ describe('constructor slice', () => {
         const newState = reducer(state, closeModal())
         expect(newState.orderModalData).toBeNull()
         expect(newState.orderRequest).toBe(false)
+    })
+    describe('extraReducers', () => {
+        test('pending', () => {
+            const action = { type: fetchIngredients.pending.type }
+            const state = reducer(initialState, action)
+            expect(state.isLoading).toBe(true)
+        })
+        test('fulfilled', () => {
+            const payload = [bun]
+            const action = {
+                type: fetchIngredients.fulfilled.type,
+                payload
+            }
+            const state = reducer(initialState, action)
+
+            expect(state.isLoading).toBe(false)
+            expect(state.allingredients).toEqual(payload)
+        })
+        test('rejected', () => {
+            const action = { type: fetchIngredients.rejected.type }
+            const state = reducer(initialState, action)
+
+            expect(state.isLoading).toBe(false)
+        })
     })
 })
