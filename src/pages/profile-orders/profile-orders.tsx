@@ -2,8 +2,8 @@ import { ProfileOrdersUI } from '@ui-pages';
 import { TOrder } from '@utils-types';
 import { FC, useEffect } from 'react';
 import { useDispatch, useSelector } from '../../services/store';
-import { getOrders } from '../../services/userSlice';
-import { fetchFeed } from '../../services/feedSlice';
+import { getOrders } from '../../services/userSlice/userSlice';
+import { fetchFeed } from '../../services/feedSlice/feedSlice';
 import { useNavigate } from 'react-router-dom';
 import { Preloader } from '@ui';
 
