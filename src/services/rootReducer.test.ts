@@ -7,16 +7,10 @@ describe('rootReducer', () => {
   it('rootReducer initialization', () => {
     const state = rootReducer(undefined, { type: '@@INIT' });
 
-    expect(state.user).toEqual(
-      userReducer(undefined, { type: '@@INIT' })
-    );
-
-    expect(state.feed).toEqual(
-      feedReducer(undefined, { type: '@@INIT' })
-    );
-
-    expect(state.homePage).toEqual(
-      ConstructorReducer(undefined, { type: '@@INIT' })
-    );
+    expect(state).toEqual({
+      user: userReducer(undefined, { type: '@@INIT' }),
+      feed: feedReducer(undefined, { type: '@@INIT' }),
+      homePage: ConstructorReducer(undefined, { type: '@@INIT' })
+    });
   });
 });
